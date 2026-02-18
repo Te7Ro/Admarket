@@ -1,0 +1,36 @@
+version: "3.8"
+
+services:
+  admarket:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: admarket
+    ports:
+      - "8085:8080"
+    env_file:
+      - .env
+    depends_on:
+      admarket-db:
+        condition: service_healthy
+
+  admarket-db:
+    image: postgres:15
+    container_name: admarket-db
+    restart: always
+    environment:
+      POSTGRES_DB: ${POSTGRES_DB}
+      POSTGRES_USER: ${POSTGRES_USER}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
+    ports:
+      - "5435:5432"
+    volumes:
+      - admarket_pgdata:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U $${POSTGRES_USER} -d $${POSTGRES_DB}"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+volumes:
+  admarket_pgdata:

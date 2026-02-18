@@ -1,0 +1,29 @@
+spring:
+  application:
+    name: AdMarket
+
+  datasource:
+    url: ${SPRING_DATASOURCE_URL}
+    username: ${SPRING_DATASOURCE_USERNAME}
+    password: ${SPRING_DATASOURCE_PASSWORD}
+    driver-class-name: org.postgresql.Driver
+
+  jpa:
+    hibernate:
+      ddl-auto: update
+    show-sql: true
+    properties:
+      hibernate.dialect: org.hibernate.dialect.PostgreSQLDialect
+    hikari:
+      maximum-pool-size: ${SPRING_DATASOURCE_POOLSIZE:10}
+
+  flyway:
+    enabled: false
+
+application:
+  time-zone: ${SPRING_TIME_ZONE:Z}
+  security:
+    jwt:
+      secret-key: ${SPRING_SECURITY_JWT_SECRET_KEY:404E635266556A586E3272357538782F413F4428472B4B6250645367566B5970}
+      access-token-expiration: ${SPRING_SECURITY_JWT_ACCESS_TOKEN_EXPIRATION:86400000}
+      refresh-token-expiration: ${SPRING_SECURITY_JWT_REFRESH_TOKEN_EXPIRATION:604800000}

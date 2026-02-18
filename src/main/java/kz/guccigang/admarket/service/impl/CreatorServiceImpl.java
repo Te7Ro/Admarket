@@ -1,0 +1,81 @@
+package kz.guccigang.admarket.service.impl;
+
+import jakarta.transaction.Transactional;
+import kz.guccigang.admarket.dto.creator.CreatorCreateRequest;
+import kz.guccigang.admarket.dto.creator.CreatorResponse;
+import kz.guccigang.admarket.dto.creator.CreatorUpdateRequest;
+import kz.guccigang.admarket.entity.Category;
+import kz.guccigang.admarket.entity.User;
+import kz.guccigang.admarket.entity.creator.CreatorProfile;
+import kz.guccigang.admarket.exception.entity.EntityAlreadyExistsException;
+import kz.guccigang.admarket.exception.entity.EntityNotFoundException;
+import kz.guccigang.admarket.repository.CategoryRepository;
+import kz.guccigang.admarket.repository.CreatorRepository;
+import kz.guccigang.admarket.repository.UserRepository;
+import kz.guccigang.admarket.service.CreatorService;
+import kz.guccigang.admarket.util.mapper.CreatorProfileMapper;
+import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.stereotype.Service;
+
+@Service
+@RequiredArgsConstructor
+public class CreatorServiceImpl implements CreatorService {
+    private final CreatorRepository creatorRepository;
+    private final CreatorProfileMapper mapper;
+    private final UserRepository userRepository;
+    private final CategoryRepository categoryRepository;
+
+    public CreatorResponse getById(Long id) {
+        CreatorProfile profile = creatorRepository.findById(id)
+                .orElseThrow(() -> new EntityNotFoundException("Creator not found"));
+        return mapper.toDto(profile);
+    }
+
+    public Page<CreatorResponse> getAll(Pageable pageable) {
+        return creatorRepository.findAll(pageable)
+                .map(mapper::toDto);
+    }
+
+    @Transactional
+    public CreatorResponse createCreatorProfile(CreatorCreateRequest request) {
+        User user = userRepository.findById(request.getUserId())
+                .orElseThrow(() -> new EntityNotFoundException("User Not Found"));
+        Category category = categoryRepository.findById(request.getPrimaryCategoryId())
+                .orElseThrow(() -> new EntityNotFoundException("Category Not Found"));
+
+        if(creatorRepository.existsByUser(user))
+            throw new EntityAlreadyExistsException("Creator already exists");
+
+        CreatorProfile profile = mapper.toEntity(request);
+        profile.setUser(user);
+        profile.setPrimaryCategory(category);
+
+        creatorRepository.save(profile);
+        return mapper.toDto(profile);
+    }
+
+    @Transactional
+    public CreatorResponse updateCreatorProfile(Long id, CreatorUpdateRequest request) {
+        CreatorProfile creatorProfile = creatorRepository.findById(id)
+                .orElseThrow(() -> new EntityNotFoundException("Creator not found"));
+
+        mapper.updateEntity(request, creatorProfile);
+
+        if(request.getPrimaryCategoryId() != null){
+            Category category = categoryRepository.findById(request.getPrimaryCategoryId())
+                    .orElseThrow(() -> new EntityNotFoundException("Category Not Found"));
+            creatorProfile.setPrimaryCategory(category);
+        }
+
+        creatorRepository.save(creatorProfile);
+        return mapper.toDto(creatorProfile);
+    }
+
+    @Transactional
+    public void deleteCreatorProfile(Long id) {
+        creatorRepository.deleteById(id);
+    }
+
+}
