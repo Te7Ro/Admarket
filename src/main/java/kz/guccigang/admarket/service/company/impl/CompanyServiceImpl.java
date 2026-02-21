@@ -1,4 +1,4 @@
-package kz.guccigang.admarket.service.impl;
+package kz.guccigang.admarket.service.company.impl;
 
 import jakarta.transaction.Transactional;
 import kz.guccigang.admarket.dto.company.CompanyCreateRequest;
@@ -10,11 +10,11 @@ import kz.guccigang.admarket.entity.company.CompanyProfile;
 import kz.guccigang.admarket.entity.company.Industry;
 import kz.guccigang.admarket.exception.entity.EntityAlreadyExistsException;
 import kz.guccigang.admarket.exception.entity.EntityNotFoundException;
-import kz.guccigang.admarket.repository.CompanyRepository;
+import kz.guccigang.admarket.repository.company.CompanyRepository;
 import kz.guccigang.admarket.repository.CountryRepository;
-import kz.guccigang.admarket.repository.IndustryRepository;
+import kz.guccigang.admarket.repository.company.IndustryRepository;
 import kz.guccigang.admarket.repository.UserRepository;
-import kz.guccigang.admarket.service.CompanyService;
+import kz.guccigang.admarket.service.company.CompanyService;
 import kz.guccigang.admarket.util.mapper.CompanyProfileMapper;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;

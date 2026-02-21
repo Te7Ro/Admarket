@@ -1,10 +1,10 @@
-package kz.guccigang.admarket.controller;
+package kz.guccigang.admarket.controller.creator;
 
 import jakarta.validation.Valid;
 import kz.guccigang.admarket.dto.creator.CreatorCreateRequest;
 import kz.guccigang.admarket.dto.creator.CreatorResponse;
 import kz.guccigang.admarket.dto.creator.CreatorUpdateRequest;
-import kz.guccigang.admarket.service.CreatorService;
+import kz.guccigang.admarket.service.creator.CreatorService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;

@@ -15,7 +15,7 @@ import lombok.Setter;
 @Getter
 @Setter
 @NoArgsConstructor
-public class OfferTargetCountries extends BaseEntity {
+public class OfferTargetCountry extends BaseEntity {
     @ManyToOne
     @JoinColumn(name = "offer_id", nullable = false)
     private Offer offer;

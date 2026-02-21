@@ -1,4 +1,4 @@
-package kz.guccigang.admarket.service;
+package kz.guccigang.admarket.service.creator;
 
 import kz.guccigang.admarket.dto.creator.CreatorCreateRequest;
 import kz.guccigang.admarket.dto.creator.CreatorResponse;

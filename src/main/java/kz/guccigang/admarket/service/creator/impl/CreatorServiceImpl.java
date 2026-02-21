@@ -1,4 +1,4 @@
-package kz.guccigang.admarket.service.impl;
+package kz.guccigang.admarket.service.creator.impl;
 
 import jakarta.transaction.Transactional;
 import kz.guccigang.admarket.dto.creator.CreatorCreateRequest;
@@ -10,9 +10,9 @@ import kz.guccigang.admarket.entity.creator.CreatorProfile;
 import kz.guccigang.admarket.exception.entity.EntityAlreadyExistsException;
 import kz.guccigang.admarket.exception.entity.EntityNotFoundException;
 import kz.guccigang.admarket.repository.CategoryRepository;
-import kz.guccigang.admarket.repository.CreatorRepository;
+import kz.guccigang.admarket.repository.creator.CreatorRepository;
 import kz.guccigang.admarket.repository.UserRepository;
-import kz.guccigang.admarket.service.CreatorService;
+import kz.guccigang.admarket.service.creator.CreatorService;
 import kz.guccigang.admarket.util.mapper.CreatorProfileMapper;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
