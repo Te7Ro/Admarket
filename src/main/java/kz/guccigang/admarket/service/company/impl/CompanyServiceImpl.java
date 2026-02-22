@@ -90,4 +90,9 @@ public class CompanyServiceImpl implements CompanyService {
     public void deleteCompanyProfile(Long id) {
         companyRepository.deleteById(id);
     }
+
+    @Transactional
+    public void save(CompanyProfile profile) {
+        companyRepository.save(profile);
+    }
 }

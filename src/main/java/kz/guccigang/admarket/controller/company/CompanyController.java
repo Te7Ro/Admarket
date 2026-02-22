@@ -10,6 +10,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.web.PageableDefault;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
@@ -30,19 +31,9 @@ public class CompanyController {
         return companyService.getAll(pageable);
     }
 
-    @PostMapping
-    public ResponseEntity<CompanyResponse> createCompanyProfile(@RequestBody @Valid CompanyCreateRequest request) {
-        return ResponseEntity.ok(companyService.createCompanyProfile(request));
-    }
-
-    @PutMapping("{id}")
-    public ResponseEntity<CompanyResponse> updateCompanyProfile(@PathVariable Long id, @RequestBody @Valid CompanyUpdateRequest request) {
-        return ResponseEntity.ok(companyService.updateCompanyProfile(id, request));
-    }
-
-    @DeleteMapping("{id}")
-    public ResponseEntity<CompanyResponse> deleteCompanyProfile(@PathVariable Long id){
-        companyService.deleteCompanyProfile(id);
-        return ResponseEntity.ok().build();
+    @PreAuthorize("hasAuthority('ADMIN') or #userId == principal.id")
+    @PutMapping("{userId}")
+    public ResponseEntity<CompanyResponse> updateCompanyProfile(@PathVariable Long userId, @RequestBody @Valid CompanyUpdateRequest request) {
+        return ResponseEntity.ok(companyService.updateCompanyProfile(userId, request));
     }
 }

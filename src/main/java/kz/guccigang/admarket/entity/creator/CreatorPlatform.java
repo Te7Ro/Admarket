@@ -17,11 +17,9 @@ public class CreatorPlatform extends BaseEntity {
     @JoinColumn(name = "creator_id", nullable = false)
     private CreatorProfile creator;
 
-    @Column(nullable = false)
     @Enumerated(EnumType.STRING)
     private Platform platform;
 
-    @Column(nullable = false)
     private String profileUrl;
 
     private Integer followersCount;

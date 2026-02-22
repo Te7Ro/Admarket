@@ -51,7 +51,7 @@ CREATE TABLE IF NOT EXISTS users (
                                      created_at TIMESTAMPTZ NOT NULL DEFAULT now(),
     updated_at TIMESTAMPTZ NOT NULL DEFAULT now(),
     email TEXT NOT NULL UNIQUE,
-    password_hash TEXT NOT NULL,
+    password TEXT NOT NULL,
     role user_role NOT NULL,
     status user_status NOT NULL DEFAULT 'SUSPENDED'
     );

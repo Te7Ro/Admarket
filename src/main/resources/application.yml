@@ -20,6 +20,18 @@ spring:
   flyway:
     enabled: false
 
+  mail:
+    host: smtp.gmail.com
+    port: 587
+    username: ${MAIL_USERNAME}
+    password: ${MAIL_PASSWORD}
+    properties:
+      mail:
+        smtp:
+          auth: true
+          starttls:
+            enable: true
+
 application:
   time-zone: ${SPRING_TIME_ZONE:Z}
   security:

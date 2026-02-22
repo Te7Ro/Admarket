@@ -78,4 +78,9 @@ public class CreatorServiceImpl implements CreatorService {
         creatorRepository.deleteById(id);
     }
 
+    @Transactional
+    public void save(CreatorProfile profile) {
+        creatorRepository.save(profile);
+    }
+
 }

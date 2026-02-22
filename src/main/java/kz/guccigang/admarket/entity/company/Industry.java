@@ -14,6 +14,6 @@ import lombok.Setter;
 @Setter
 @NoArgsConstructor
 public class Industry extends BaseEntity {
-    @Column(nullable = false)
+    @Column(unique = true, nullable = false)
     private String name;
 }

@@ -20,24 +20,23 @@ public class CompanyProfile extends BaseEntity {
     @JoinColumn(name = "user_id", nullable = false, unique = true)
     private User user;
 
-    @Column(nullable = false)
     private String companyName;
 
     @ManyToOne
-    @JoinColumn(name = "industry_id", nullable = false)
+    @JoinColumn(name = "industry_id")
     private Industry industry;
 
-    @Column(columnDefinition = "TEXT", nullable = false)
+    @Column(columnDefinition = "TEXT")
     private String description;
 
     private String websiteUrl;
 
     @ManyToOne
-    @JoinColumn(name = "country_id", nullable = false)
+    @JoinColumn(name = "country_id")
     private Country country;
 
     @Column(precision = 12, scale = 2, nullable = false)
-    private BigDecimal minBudget;
+    private BigDecimal minBudget = BigDecimal.ZERO;
     @Column(precision = 12, scale = 2, nullable = false)
-    private BigDecimal maxBudget;
+    private BigDecimal maxBudget = BigDecimal.ZERO;
 }

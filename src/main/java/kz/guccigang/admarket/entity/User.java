@@ -24,7 +24,7 @@ public class User extends BaseEntity implements UserDetails {
     private String email;
 
     @Column(nullable = false)
-    private String passwordHash;
+    private String password;
 
     @Enumerated(EnumType.STRING)
     private Role role;
@@ -44,9 +44,6 @@ public class User extends BaseEntity implements UserDetails {
     public String getUsername() {
         return this.email;
     }
-
-    @Override
-    public String getPassword() {return this.passwordHash;}
 
     @Override
     public boolean isAccountNonExpired() {
