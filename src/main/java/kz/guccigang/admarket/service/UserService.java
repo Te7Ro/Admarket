@@ -1,9 +1,6 @@
 package kz.guccigang.admarket.service;
 
-import kz.guccigang.admarket.dto.user.UserConfirmRequest;
-import kz.guccigang.admarket.dto.user.UserCreateRequest;
-import kz.guccigang.admarket.dto.user.UserResponse;
-import kz.guccigang.admarket.dto.user.UserUpdateRequest;
+import kz.guccigang.admarket.dto.user.*;
 import kz.guccigang.admarket.entity.User;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -17,4 +14,6 @@ public interface UserService {
     User getEntityById(long id);
     void throwExceptionIfUserExists(String username);
     UserResponse confirmUser(UserConfirmRequest requestDto);
+    void sendForgetPasswordCode();
+    UserResponse forgetPassword(ForgetPasswordRequest requestDto);
 }

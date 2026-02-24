@@ -37,6 +37,22 @@ public class EmailConfirmationServiceImpl implements EmailConfirmationService {
         emailService.sendConfirmationEmail(user.getEmail(), code);
     }
 
+    @Transactional
+    public void sendForgetCode(User user) {
+
+        String code = generator.generateCode();
+
+        EmailConfirmationCode entity = new EmailConfirmationCode();
+        entity.setUser(user);
+        entity.setCode(code);
+        entity.setExpiresAt(ZonedDateTime.now().plusMinutes(10));
+        entity.setUsed(false);
+
+        repository.save(entity);
+
+        emailService.sendForgetPasswordEmail(user.getEmail(), code);
+    }
+
     public boolean confirmCode(User user, String code) {
 
         EmailConfirmationCode entity = repository

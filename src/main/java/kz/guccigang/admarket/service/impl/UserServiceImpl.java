@@ -1,10 +1,7 @@
 package kz.guccigang.admarket.service.impl;
 
 import jakarta.persistence.EntityNotFoundException;
-import kz.guccigang.admarket.dto.user.UserConfirmRequest;
-import kz.guccigang.admarket.dto.user.UserCreateRequest;
-import kz.guccigang.admarket.dto.user.UserResponse;
-import kz.guccigang.admarket.dto.user.UserUpdateRequest;
+import kz.guccigang.admarket.dto.user.*;
 import kz.guccigang.admarket.entity.User;
 import kz.guccigang.admarket.enums.UserStatus;
 import kz.guccigang.admarket.exception.entity.EntityAlreadyExistsException;
@@ -130,4 +127,21 @@ public class UserServiceImpl implements UserService {
         return userMapper.toDto(user);
     }
 
+    public void sendForgetPasswordCode(){
+        User user = getMyUser();
+        emailConfirmationService.sendForgetCode(user);
+    }
+
+    @Transactional
+    public UserResponse forgetPassword(ForgetPasswordRequest request){
+        User user = this.getMyUser();
+
+        if(emailConfirmationService.confirmCode(user, request.getCode())){
+            user.setPassword(passwordEncoder.encode(request.getNewPassword()));
+        } else {
+            throw new IllegalArgumentException("Code does not match");
+        }
+
+        return userMapper.toDto(user);
+    }
 }

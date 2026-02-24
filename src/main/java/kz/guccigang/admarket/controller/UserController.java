@@ -2,16 +2,14 @@ package kz.guccigang.admarket.controller;
 
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.Positive;
-import kz.guccigang.admarket.dto.user.UserConfirmRequest;
-import kz.guccigang.admarket.dto.user.UserCreateRequest;
-import kz.guccigang.admarket.dto.user.UserResponse;
-import kz.guccigang.admarket.dto.user.UserUpdateRequest;
+import kz.guccigang.admarket.dto.user.*;
 import kz.guccigang.admarket.entity.User;
 import kz.guccigang.admarket.service.UserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.*;
@@ -40,6 +38,19 @@ public class UserController {
     @PostMapping("/confirm")
     public UserResponse confirmUser(@RequestBody UserConfirmRequest request){
         return userService.confirmUser(request);
+    }
+
+    @PreAuthorize("isAuthenticated()")
+    @PostMapping("/forget-password-code")
+    public ResponseEntity<Void> sendForgetPasswordCode(){
+        userService.sendForgetPasswordCode();
+        return ResponseEntity.ok().build();
+    }
+
+    @PreAuthorize("isAuthenticated()")
+    @PostMapping("/forget-password")
+    public ResponseEntity<UserResponse> forgetPassword(@RequestBody ForgetPasswordRequest request){
+        return ResponseEntity.ok(userService.forgetPassword(request));
     }
 
     @PreAuthorize("hasAuthority('ADMIN') or #id == principal.id")

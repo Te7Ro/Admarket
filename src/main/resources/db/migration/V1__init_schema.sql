@@ -276,8 +276,6 @@ ALTER TABLE countries
 ALTER TABLE creator_profiles
     ADD CONSTRAINT uc_creator_profiles_user UNIQUE (user_id);
 
-ALTER TABLE email_confirmation_codes
-    ADD CONSTRAINT uc_email_confirmation_codes_user UNIQUE (user_id);
 
 ALTER TABLE industries
     ADD CONSTRAINT uc_industries_name UNIQUE (name);

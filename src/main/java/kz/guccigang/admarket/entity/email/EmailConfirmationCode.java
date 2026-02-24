@@ -20,7 +20,7 @@ public class EmailConfirmationCode extends BaseEntity {
     private String code;
 
     @OneToOne
-    @JoinColumn(name = "user_id", nullable = false)
+    @JoinColumn(name = "user_id", nullable = false, unique = false)
     private User user;
 
     @Column(nullable = false)
