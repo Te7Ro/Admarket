@@ -12,8 +12,9 @@ public interface UserService {
     UserResponse update(long id, UserUpdateRequest requestDto);
     void delete(long id);
     User getEntityById(long id);
+    User getEntityByEmail(String email);
     void throwExceptionIfUserExists(String username);
     UserResponse confirmUser(UserConfirmRequest requestDto);
-    void sendForgetPasswordCode();
+    void sendForgetPasswordCode(SendForgetPasswordCodeRequest requestDto);
     UserResponse forgetPassword(ForgetPasswordRequest requestDto);
 }

@@ -40,14 +40,12 @@ public class UserController {
         return userService.confirmUser(request);
     }
 
-    @PreAuthorize("isAuthenticated()")
     @PostMapping("/forget-password-code")
-    public ResponseEntity<Void> sendForgetPasswordCode(){
-        userService.sendForgetPasswordCode();
+    public ResponseEntity<Void> sendForgetPasswordCode(@RequestBody SendForgetPasswordCodeRequest request){
+        userService.sendForgetPasswordCode(request);
         return ResponseEntity.ok().build();
     }
 
-    @PreAuthorize("isAuthenticated()")
     @PostMapping("/forget-password")
     public ResponseEntity<UserResponse> forgetPassword(@RequestBody ForgetPasswordRequest request){
         return ResponseEntity.ok(userService.forgetPassword(request));

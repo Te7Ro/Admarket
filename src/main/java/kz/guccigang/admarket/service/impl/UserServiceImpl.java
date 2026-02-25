@@ -88,6 +88,12 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
+    public User getEntityByEmail(String email) {
+        return userRepository.findByEmail(email)
+                .orElseThrow(() -> new EntityNotFoundException("User with email " + email + " does not exist"));
+    }
+
+    @Override
     public void throwExceptionIfUserExists(String email) {
         userRepository.findByEmail(email)
                 .ifPresent(foundUser -> {
@@ -118,7 +124,7 @@ public class UserServiceImpl implements UserService {
     public UserResponse confirmUser(UserConfirmRequest requestDto) {
         User user = this.getMyUser();
 
-        if(emailConfirmationService.confirmCode(user, requestDto.getCode())){
+        if(emailConfirmationService.confirmCode(user.getEmail(), requestDto.getCode())){
             user.setStatus(UserStatus.ACTIVE);
         } else {
             throw new IllegalArgumentException("Code does not match");
@@ -127,16 +133,15 @@ public class UserServiceImpl implements UserService {
         return userMapper.toDto(user);
     }
 
-    public void sendForgetPasswordCode(){
-        User user = getMyUser();
-        emailConfirmationService.sendForgetCode(user);
+    public void sendForgetPasswordCode(SendForgetPasswordCodeRequest request){
+        emailConfirmationService.sendForgetCode(request.getEmail());
     }
 
     @Transactional
     public UserResponse forgetPassword(ForgetPasswordRequest request){
-        User user = this.getMyUser();
+        User user = this.getEntityByEmail(request.getEmail());
 
-        if(emailConfirmationService.confirmCode(user, request.getCode())){
+        if(emailConfirmationService.confirmCode(request.getEmail(), request.getCode())){
             user.setPassword(passwordEncoder.encode(request.getNewPassword()));
         } else {
             throw new IllegalArgumentException("Code does not match");

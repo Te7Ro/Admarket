@@ -4,6 +4,8 @@ import jakarta.transaction.Transactional;
 import kz.guccigang.admarket.entity.User;
 import kz.guccigang.admarket.entity.email.EmailConfirmationCode;
 import kz.guccigang.admarket.enums.UserStatus;
+import kz.guccigang.admarket.exception.entity.EntityNotFoundException;
+import kz.guccigang.admarket.repository.UserRepository;
 import kz.guccigang.admarket.repository.email.EmailConfirmationCodeRepository;
 import kz.guccigang.admarket.service.UserService;
 import kz.guccigang.admarket.service.email.EmailConfirmationService;
@@ -20,6 +22,7 @@ public class EmailConfirmationServiceImpl implements EmailConfirmationService {
     private final EmailConfirmationCodeRepository repository;
     private final EmailService emailService;
     private final ConfirmationCodeGenerator generator;
+    private final UserRepository userRepository;
 
     @Transactional
     public void sendConfirmationCode(User user) {
@@ -38,11 +41,13 @@ public class EmailConfirmationServiceImpl implements EmailConfirmationService {
     }
 
     @Transactional
-    public void sendForgetCode(User user) {
+    public void sendForgetCode(String email) {
 
         String code = generator.generateCode();
 
         EmailConfirmationCode entity = new EmailConfirmationCode();
+        User user = userRepository.findByEmail(email)
+                        .orElseThrow(() -> new EntityNotFoundException("User with email " + email + " not found"));
         entity.setUser(user);
         entity.setCode(code);
         entity.setExpiresAt(ZonedDateTime.now().plusMinutes(10));
@@ -53,8 +58,10 @@ public class EmailConfirmationServiceImpl implements EmailConfirmationService {
         emailService.sendForgetPasswordEmail(user.getEmail(), code);
     }
 
-    public boolean confirmCode(User user, String code) {
-
+    @Transactional
+    public boolean confirmCode(String email, String code) {
+        User user = userRepository.findByEmail(email)
+                .orElseThrow(() -> new EntityNotFoundException("User with email " + email + " not found"));
         EmailConfirmationCode entity = repository
                 .findByUserAndCodeAndUsedFalse(user, code)
                 .orElseThrow(() -> new RuntimeException("Invalid code"));
