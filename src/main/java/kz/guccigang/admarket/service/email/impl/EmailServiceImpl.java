@@ -20,59 +20,112 @@ public class EmailServiceImpl implements EmailService {
             String subject = "Confirm your AdMarket account";
 
             String content = """
-                    <!DOCTYPE html>
-                    <html>
-                    <head>
-                        <meta charset="UTF-8">
-                    </head>
-                    <body style="margin:0;padding:0;font-family:Arial,sans-serif;background-color:#f4f6f8;">
-                    
-                        <table align="center" width="100%%" cellpadding="0" cellspacing="0" style="max-width:600px;background-color:#ffffff;margin-top:20px;border-radius:10px;box-shadow:0 4px 10px rgba(0,0,0,0.1);">
-                            
-                            <tr>
-                                <td style="background-color:#2563eb;color:#ffffff;padding:20px;border-top-left-radius:10px;border-top-right-radius:10px;text-align:center;">
-                                    <h2 style="margin:0;">AdMarket</h2>
-                                </td>
-                            </tr>
-                    
-                            <tr>
-                                <td style="padding:30px;">
-                    
-                                    <h3 style="margin-top:0;">Confirm your email address</h3>
-                    
-                                    <p style="color:#555;">
-                                        Thank you for registering with <strong>AdMarket</strong>.
-                                        Please use the verification code below to activate your account:
+                <!DOCTYPE html>
+                <html>
+                <head>
+                  <meta charset="UTF-8">
+                  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+                  <title>Confirm your email</title>
+                </head>
+                
+                <body style="margin:0;padding:0;background:#F9FAFB;font-family:Arial,Helvetica,sans-serif;line-height:1.5;color:#111827;">
+                  <!-- Preheader (hidden) -->
+                  <div style="display:none;max-height:0;overflow:hidden;opacity:0;color:transparent;">
+                    Your AdMarket verification code is 02026. It expires in 10 minutes.
+                  </div>
+                
+                  <table role="presentation" width="100%%" cellpadding="0" cellspacing="0" style="width:100%%;background:#F9FAFB;padding:24px 12px;">
+                    <tr>
+                      <td align="center">
+                
+                        <!-- Card -->
+                        <table role="presentation" cellpadding="0" cellspacing="0"
+                               style="width:100%%;max-width:600px;background:#ffffff;border:1px solid #E5E7EB;border-radius:16px;overflow:hidden;box-shadow:0 12px 30px rgba(17,24,39,0.08);">
+                
+                          <!-- Header -->
+                          <tr>
+                            <td style="padding:22px 24px;background:#ffffff;border-bottom:1px solid #E5E7EB;">
+                              <table role="presentation" width="100%%" cellpadding="0" cellspacing="0">
+                                <tr>
+                                  <td align="left" style="vertical-align:middle;">
+                                    <table role="presentation" cellpadding="0" cellspacing="0">
+                                      <tr>
+                                        <td style="width:34px;height:34px;background:#1E3A8A;border-radius:10px;text-align:center;vertical-align:middle;">
+                                          <span style="display:inline-block;color:#ffffff;font-weight:800;font-size:18px;line-height:34px;">A</span>
+                                        </td>
+                                        <td style="padding-left:10px;vertical-align:middle;">
+                                          <span style="font-size:18px;font-weight:800;color:#1E3A8A;">AdMarket</span>
+                                        </td>
+                                      </tr>
+                                    </table>
+                                  </td>
+                                  <td align="right" style="vertical-align:middle;">
+                                    <span style="display:inline-block;background:#EFF6FF;color:#3B82F6;border-radius:999px;padding:6px 12px;font-size:12px;font-weight:700;">
+                                      ✨ AI-Powered Matching
+                                    </span>
+                                  </td>
+                                </tr>
+                              </table>
+                            </td>
+                          </tr>
+                
+                          <!-- Body -->
+                          <tr>
+                            <td style="padding:28px 24px;">
+                              <h1 style="margin:0 0 8px 0;font-size:22px;line-height:1.25;color:#111827;">
+                                Confirm your email address
+                              </h1>
+                
+                              <p style="margin:0 0 16px 0;font-size:15px;color:#4B5563;">
+                                Thanks for joining <strong style="color:#111827;">AdMarket</strong>.
+                                Use the verification code below to activate your account.
+                              </p>
+                
+                              <!-- Code block -->
+                              <div style="margin:22px 0 18px 0;text-align:center;">
+                                <div style="display:inline-block;background:#F3F4F6;border:1px solid #E5E7EB;border-radius:14px;padding:14px 18px;">
+                                  <div style="font-size:28px;font-weight:800;letter-spacing:6px;color:#1E3A8A;">
+                                    %s
+                                  </div>
+                                </div>
+                              </div>
+                
+                              <!-- Details -->
+                              <table role="presentation" width="100%%" cellpadding="0" cellspacing="0"
+                                     style="width:100%%;background:#F9FAFB;border:1px solid #E5E7EB;border-radius:12px;">
+                                <tr>
+                                  <td style="padding:14px 14px;">
+                                    <p style="margin:0;font-size:13px;color:#4B5563;">
+                                      ⏱️ This code expires in <strong>10 minutes</strong>.
                                     </p>
-                    
-                                    <div style="text-align:center;margin:30px 0;">
-                                        <span style="display:inline-block;font-size:28px;font-weight:bold;color:#2563eb;background:#f1f5f9;padding:15px 25px;border-radius:8px;letter-spacing:4px;">
-                                            %s
-                                        </span>
-                                    </div>
-                    
-                                    <p style="color:#555;">
-                                        This code will expire in <strong>10 minutes</strong>.
-                                    </p>
-                    
-                                    <p style="color:#999;font-size:12px;">
-                                        If you did not create an account, you can safely ignore this email.
-                                    </p>
-                    
-                                </td>
-                            </tr>
-                    
-                            <tr>
-                                <td style="background-color:#f8fafc;padding:15px;text-align:center;font-size:12px;color:#999;border-bottom-left-radius:10px;border-bottom-right-radius:10px;">
-                                    © 2026 AdMarket. All rights reserved.
-                                </td>
-                            </tr>
-                    
+                                  </td>
+                                </tr>
+                              </table>
+                
+                              <p style="margin:18px 0 0 0;font-size:12px;color:#6B7280;">
+                                If you didn’t create an account, you can safely ignore this email.
+                              </p>
+                            </td>
+                          </tr>
+                
+                          <!-- Footer -->
+                          <tr>
+                            <td style="padding:16px 24px;background:#ffffff;border-top:1px solid #E5E7EB;text-align:center;">
+                              <p style="margin:0;font-size:12px;color:#6B7280;">
+                                © 2026 AdMarket. All rights reserved.
+                              </p>
+                            </td>
+                          </tr>
+                
                         </table>
-                    
-                    </body>
-                    </html>
-                    """.formatted(code);
+                        <!-- /Card -->
+                
+                      </td>
+                    </tr>
+                  </table>
+                </body>
+                </html>
+                """.formatted(code);
 
             MimeMessage message = mailSender.createMimeMessage();
 
@@ -100,71 +153,112 @@ public class EmailServiceImpl implements EmailService {
             String subject = "Reset your AdMarket password";
 
             String content = """
-                    <!DOCTYPE html>
-                    <html>
-                    <head>
-                        <meta charset="UTF-8">
-                    </head>
-                    <body style="margin:0;padding:0;font-family:Arial,sans-serif;background-color:#f4f6f8;">
-                    
-                        <table align="center" width="100%%" cellpadding="0" cellspacing="0"
-                               style="max-width:600px;background-color:#ffffff;margin-top:20px;border-radius:10px;
-                               box-shadow:0 4px 10px rgba(0,0,0,0.1);">
-                    
-                            <tr>
-                                <td style="background-color:#dc2626;color:#ffffff;padding:20px;
-                                           border-top-left-radius:10px;border-top-right-radius:10px;text-align:center;">
-                                    <h2 style="margin:0;">AdMarket</h2>
-                                </td>
-                            </tr>
-                    
-                            <tr>
-                                <td style="padding:30px;">
-                    
-                                    <h3 style="margin-top:0;color:#111;">Password Reset Request</h3>
-                    
-                                    <p style="color:#555;">
-                                        We received a request to reset your AdMarket account password.
-                                        Use the verification code below to proceed:
+                <!DOCTYPE html>
+                <html>
+                <head>
+                  <meta charset="UTF-8">
+                  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+                  <title>Reset your password</title>
+                </head>
+                
+                <body style="margin:0;padding:0;background:#F9FAFB;font-family:Arial,Helvetica,sans-serif;line-height:1.5;color:#111827;">
+                  <!-- Preheader (hidden) -->
+                  <div style="display:none;max-height:0;overflow:hidden;opacity:0;color:transparent;">
+                    Your AdMarket password reset code is 02026. It expires in 10 minutes.
+                  </div>
+                
+                  <table role="presentation" width="100%%" cellpadding="0" cellspacing="0" style="width:100%%;background:#F9FAFB;padding:24px 12px;">
+                    <tr>
+                      <td align="center">
+                
+                        <!-- Card -->
+                        <table role="presentation" cellpadding="0" cellspacing="0"
+                               style="width:100%%;max-width:600px;background:#ffffff;border:1px solid #E5E7EB;border-radius:16px;overflow:hidden;box-shadow:0 12px 30px rgba(17,24,39,0.08);">
+                
+                          <!-- Header -->
+                          <tr>
+                            <td style="padding:22px 24px;background:#ffffff;border-bottom:1px solid #E5E7EB;">
+                              <table role="presentation" width="100%%" cellpadding="0" cellspacing="0">
+                                <tr>
+                                  <td align="left" style="vertical-align:middle;">
+                                    <table role="presentation" cellpadding="0" cellspacing="0">
+                                      <tr>
+                                        <td style="width:34px;height:34px;background:#1E3A8A;border-radius:10px;text-align:center;vertical-align:middle;">
+                                          <span style="display:inline-block;color:#ffffff;font-weight:800;font-size:18px;line-height:34px;">A</span>
+                                        </td>
+                                        <td style="padding-left:10px;vertical-align:middle;">
+                                          <span style="font-size:18px;font-weight:800;color:#1E3A8A;">AdMarket</span>
+                                        </td>
+                                      </tr>
+                                    </table>
+                                  </td>
+                                  <td align="right" style="vertical-align:middle;">
+                                    <span style="display:inline-block;background:#FEF2F2;color:#DC2626;border-radius:999px;padding:6px 12px;font-size:12px;font-weight:700;">
+                                      🔒 Security Notice
+                                    </span>
+                                  </td>
+                                </tr>
+                              </table>
+                            </td>
+                          </tr>
+                
+                          <!-- Body -->
+                          <tr>
+                            <td style="padding:28px 24px;">
+                              <h1 style="margin:0 0 8px 0;font-size:22px;line-height:1.25;color:#111827;">
+                                Password reset request
+                              </h1>
+                
+                              <p style="margin:0 0 16px 0;font-size:15px;color:#4B5563;">
+                                We received a request to reset your <strong style="color:#111827;">AdMarket</strong> password.
+                                Use the code below to proceed.
+                              </p>
+                
+                              <!-- Code block -->
+                              <div style="margin:22px 0 18px 0;text-align:center;">
+                                <div style="display:inline-block;background:#FEF2F2;border:1px solid #FECACA;border-radius:14px;padding:14px 18px;">
+                                  <div style="font-size:28px;font-weight:800;letter-spacing:6px;color:#DC2626;">
+                                    %s
+                                  </div>
+                                </div>
+                              </div>
+                
+                              <!-- Details -->
+                              <table role="presentation" width="100%%" cellpadding="0" cellspacing="0"
+                                     style="width:100%%;background:#F9FAFB;border:1px solid #E5E7EB;border-radius:12px;">
+                                <tr>
+                                  <td style="padding:14px 14px;">
+                                    <p style="margin:0;font-size:13px;color:#4B5563;">
+                                      ⏱️ This code expires in <strong>10 minutes</strong>.
                                     </p>
-                    
-                                    <div style="text-align:center;margin:30px 0;">
-                                        <span style="display:inline-block;font-size:28px;font-weight:bold;
-                                                     color:#dc2626;background:#fef2f2;padding:15px 25px;
-                                                     border-radius:8px;letter-spacing:4px;">
-                                            %s
-                                        </span>
-                                    </div>
-                    
-                                    <p style="color:#555;">
-                                        This code will expire in <strong>10 minutes</strong>.
-                                    </p>
-                    
-                                    <p style="color:#555;">
-                                        If you did not request a password reset, please ignore this email.
-                                        Your password will remain unchanged.
-                                    </p>
-                    
-                                    <p style="color:#999;font-size:12px;margin-top:30px;">
-                                        For security reasons, never share this code with anyone.
-                                    </p>
-                    
-                                </td>
-                            </tr>
-                    
-                            <tr>
-                                <td style="background-color:#f8fafc;padding:15px;text-align:center;
-                                           font-size:12px;color:#999;
-                                           border-bottom-left-radius:10px;border-bottom-right-radius:10px;">
-                                    © 2026 AdMarket. All rights reserved.
-                                </td>
-                            </tr>
-                    
+                                  </td>
+                                </tr>
+                              </table>
+                
+                              <p style="margin:18px 0 0 0;font-size:12px;color:#6B7280;">
+                                If you didn’t request a password reset, ignore this email. For security, never share this code with anyone.
+                              </p>
+                            </td>
+                          </tr>
+                
+                          <!-- Footer -->
+                          <tr>
+                            <td style="padding:16px 24px;background:#ffffff;border-top:1px solid #E5E7EB;text-align:center;">
+                              <p style="margin:0;font-size:12px;color:#6B7280;">
+                                © 2026 AdMarket. All rights reserved.
+                              </p>
+                            </td>
+                          </tr>
+                
                         </table>
-                    
-                    </body>
-                    </html>
-                    """.formatted(code);
+                        <!-- /Card -->
+                
+                      </td>
+                    </tr>
+                  </table>
+                </body>
+                </html>
+                """.formatted(code);
 
             MimeMessage message = mailSender.createMimeMessage();
 
