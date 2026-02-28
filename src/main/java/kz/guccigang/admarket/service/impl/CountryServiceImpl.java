@@ -35,6 +35,10 @@ public class CountryServiceImpl implements CountryService {
         return countryRepository.findById(id).map(mapper::toDto).orElse(null);
     }
 
+    public Country getEntityById(Long id) {
+        return countryRepository.findById(id).orElseThrow(() -> new EntityNotFoundException("Country not found"));
+    }
+
     @Transactional
     public CountryResponse createCountry(CountryCreateRequest request){
         if(countryRepository.existsByCodeOrName(request.getCode(), request.getName())){

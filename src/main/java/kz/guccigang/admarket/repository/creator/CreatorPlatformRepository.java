@@ -12,6 +12,7 @@ import java.util.Optional;
 @Repository
 public interface CreatorPlatformRepository extends BaseRepository<CreatorPlatform> {
     List<CreatorPlatform> findAllByCreator(CreatorProfile creator);
-
+    Optional<CreatorPlatform> findByIdAndCreator(Long id, CreatorProfile creator);
     Optional<CreatorPlatform> findByCreatorAndPlatform(CreatorProfile creator, Platform platform);
+    boolean existsByCreatorAndPlatform(CreatorProfile creator, Platform platform);
 }

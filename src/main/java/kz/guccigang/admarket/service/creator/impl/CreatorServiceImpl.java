@@ -38,6 +38,15 @@ public class CreatorServiceImpl implements CreatorService {
                 .map(mapper::toDto);
     }
 
+    public CreatorProfile getEntityById(Long id){
+        return creatorRepository.findById(id)
+                .orElseThrow(() -> new EntityNotFoundException("Creator not found"));
+    }
+
+    public CreatorProfile getEntityByUser(User user) {
+        return creatorRepository.findByUser(user);
+    }
+
     @Transactional
     public CreatorResponse createCreatorProfile(CreatorCreateRequest request) {
         User user = userRepository.findById(request.getUserId())

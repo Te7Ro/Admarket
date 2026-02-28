@@ -13,4 +13,6 @@ public interface CompanyRepository extends BaseRepository<CompanyProfile> {
     Page<CompanyProfile> findAll(Pageable pageable);
 
     boolean existsByUser(User user);
+
+    CompanyProfile findByUser(User user);
 }

@@ -15,4 +15,6 @@ public interface CreatorRepository extends BaseRepository<CreatorProfile> {
     Page<CreatorProfile> findAll(Pageable pageable);
 
     boolean existsByUser(User user);
+
+    CreatorProfile findByUser(User user);
 }

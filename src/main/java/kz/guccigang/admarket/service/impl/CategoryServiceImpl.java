@@ -1,8 +1,8 @@
 package kz.guccigang.admarket.service.impl;
 
 import jakarta.transaction.Transactional;
-import kz.guccigang.admarket.dto.Category.CategoryCreateRequest;
-import kz.guccigang.admarket.dto.Category.CategoryResponse;
+import kz.guccigang.admarket.dto.category.CategoryCreateRequest;
+import kz.guccigang.admarket.dto.category.CategoryResponse;
 import kz.guccigang.admarket.entity.Category;
 import kz.guccigang.admarket.exception.entity.EntityAlreadyExistsException;
 import kz.guccigang.admarket.repository.CategoryRepository;
@@ -31,6 +31,10 @@ public class CategoryServiceImpl implements CategoryService {
 
     public CategoryResponse getCategoryByName(String name){
         return categoryRepository.findByName(name).map(mapper::toDto).orElse(null);
+    }
+
+    public Category getCategoryEntityById(Long id){
+        return categoryRepository.findById(id).orElse(null);
     }
 
     @Transactional

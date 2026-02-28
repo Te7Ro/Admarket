@@ -1,8 +1,8 @@
 package kz.guccigang.admarket.controller;
 
 import jakarta.validation.Valid;
-import kz.guccigang.admarket.dto.Category.CategoryCreateRequest;
-import kz.guccigang.admarket.dto.Category.CategoryResponse;
+import kz.guccigang.admarket.dto.category.CategoryCreateRequest;
+import kz.guccigang.admarket.dto.category.CategoryResponse;
 import kz.guccigang.admarket.service.CategoryService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;

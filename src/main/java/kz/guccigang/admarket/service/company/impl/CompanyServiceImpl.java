@@ -41,6 +41,15 @@ public class CompanyServiceImpl implements CompanyService {
                 .map(mapper::toDto);
     }
 
+    public CompanyProfile getEntityByUser(User user) {
+        return companyRepository.findByUser(user);
+    }
+
+    public CompanyProfile getEntityById(Long id) {
+        return companyRepository.findById(id)
+                .orElseThrow(() -> new EntityNotFoundException("Company Not Found"));
+    }
+
     @Transactional
     public CompanyResponse createCompanyProfile(CompanyCreateRequest request) {
         User user = userRepository.findById(request.getUserId())

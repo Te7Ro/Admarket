@@ -12,5 +12,7 @@ import java.util.Optional;
 @Repository
 public interface OfferRepository extends BaseRepository<Offer> {
     Page<Offer> findAllByCompany(CompanyProfile company, Pageable pageable);
-    Optional<Offer> findByTitle(String title);
+    Page<Offer> findAll(Pageable pageable);
+    Optional<Offer> findById(Long id);
+    Optional<Offer> findByCompanyAndId(CompanyProfile company, Long id);
 }
