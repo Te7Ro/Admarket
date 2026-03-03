@@ -6,8 +6,10 @@ import kz.guccigang.admarket.repository.BaseRepository;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
+import java.util.Optional;
 
 @Repository
 public interface CreatorAudienceAgeRepository extends BaseRepository<CreatorAudienceAge> {
-    List<CreatorAudienceAge> findByCreator(CreatorProfile creator);
+    List<CreatorAudienceAge> findAllByCreator(CreatorProfile creator);
+    Optional<CreatorAudienceAge> findByIdAndCreator(Long id, CreatorProfile creator);
 }
