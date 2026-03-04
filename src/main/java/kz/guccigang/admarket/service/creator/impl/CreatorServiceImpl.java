@@ -12,6 +12,7 @@ import kz.guccigang.admarket.exception.entity.EntityNotFoundException;
 import kz.guccigang.admarket.repository.CategoryRepository;
 import kz.guccigang.admarket.repository.creator.CreatorRepository;
 import kz.guccigang.admarket.repository.UserRepository;
+import kz.guccigang.admarket.service.AuthenticationService;
 import kz.guccigang.admarket.service.creator.CreatorService;
 import kz.guccigang.admarket.util.mapper.CreatorProfileMapper;
 import lombok.RequiredArgsConstructor;
@@ -26,6 +27,7 @@ public class CreatorServiceImpl implements CreatorService {
     private final CreatorProfileMapper mapper;
     private final UserRepository userRepository;
     private final CategoryRepository categoryRepository;
+    private final AuthenticationService authenticationService;
 
     public CreatorResponse getById(Long id) {
         CreatorProfile profile = creatorRepository.findById(id)
@@ -67,8 +69,9 @@ public class CreatorServiceImpl implements CreatorService {
 
     @Transactional
     public CreatorResponse updateCreatorProfile(Long id, CreatorUpdateRequest request) {
-        CreatorProfile creatorProfile = creatorRepository.findById(id)
-                .orElseThrow(() -> new EntityNotFoundException("Creator not found"));
+        User user = authenticationService.getCurrentUser()
+                .orElseThrow(() -> new EntityNotFoundException("User Not Found"));
+        CreatorProfile creatorProfile = creatorRepository.findByUser(user);
 
         mapper.updateEntity(request, creatorProfile);
 

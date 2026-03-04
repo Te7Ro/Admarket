@@ -15,6 +15,8 @@ import kz.guccigang.admarket.jwt.JwtFactory;
 import kz.guccigang.admarket.jwt.JwtParser;
 import kz.guccigang.admarket.jwt.JwtValidator;
 import kz.guccigang.admarket.repository.UserRepository;
+import kz.guccigang.admarket.repository.company.CompanyRepository;
+import kz.guccigang.admarket.repository.creator.CreatorRepository;
 import kz.guccigang.admarket.service.AuthenticationService;
 import kz.guccigang.admarket.service.UserService;
 import kz.guccigang.admarket.service.company.CompanyService;
@@ -42,14 +44,14 @@ public class AuthenticationServiceImpl implements AuthenticationService {
 
     private final UserRepository userRepository;
     private final UserService userService;
-    private final CompanyService companyService;
-    private final CreatorService creatorService;
     private final JwtFactory jwtFactory;
     private final JwtValidator jwtValidator;
     private final JwtParser jwtParser;
     private final PasswordEncoder passwordEncoder;
     private final AuthenticationManager authenticationManager;
     private final EmailConfirmationService emailConfirmationService;
+    private final CompanyRepository companyRepository;
+    private final CreatorRepository creatorRepository;
 
     @Override
     @Transactional
@@ -68,13 +70,13 @@ public class AuthenticationServiceImpl implements AuthenticationService {
         if(Role.COMPANY.equals(Role.valueOf(request.getRole()))) {
             CompanyProfile companyProfile = new CompanyProfile();
             companyProfile.setUser(user);
-            companyService.save(companyProfile);
+            companyRepository.save(companyProfile);
         }
         if(Role.CREATOR.equals(Role.valueOf(request.getRole()))) {
             CreatorProfile creatorProfile = new CreatorProfile();
             creatorProfile.setUser(user);
             creatorProfile.setDisplayName(user.getEmail());
-            creatorService.save(creatorProfile);
+            creatorRepository.save(creatorProfile);
         }
 
         log.info("User saved to the database with username: {}", user.getUsername());
