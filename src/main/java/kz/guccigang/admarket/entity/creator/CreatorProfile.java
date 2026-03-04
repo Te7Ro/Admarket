@@ -29,19 +29,19 @@ public class CreatorProfile extends BaseEntity {
     private String bio;
 
     @ManyToOne
-    @JoinColumn(name = "primary_category_id", nullable = false)
+    @JoinColumn(name = "primary_category_id")
     private Category primaryCategory;
 
     @Column(nullable = false)
-    private Integer followersCount;
+    private Integer followersCount = 0;
 
     @Column(nullable = false)
-    private Integer avgViews;
+    private Integer avgViews = 0;
 
     @Column(precision = 5, scale = 2, nullable = false)
     @DecimalMax("100.00")
     @DecimalMin("0.00")
-    private BigDecimal engagementRate;
+    private BigDecimal engagementRate = BigDecimal.ZERO;
 
     private String contactEmail;
 }

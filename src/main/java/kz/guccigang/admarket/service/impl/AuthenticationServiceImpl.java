@@ -73,6 +73,7 @@ public class AuthenticationServiceImpl implements AuthenticationService {
         if(Role.CREATOR.equals(Role.valueOf(request.getRole()))) {
             CreatorProfile creatorProfile = new CreatorProfile();
             creatorProfile.setUser(user);
+            creatorProfile.setDisplayName(user.getEmail());
             creatorService.save(creatorProfile);
         }
 
