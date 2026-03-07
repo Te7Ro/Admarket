@@ -21,6 +21,8 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.List;
+
 @Service
 @RequiredArgsConstructor
 public class OfferServiceImpl implements OfferService {
@@ -31,12 +33,20 @@ public class OfferServiceImpl implements OfferService {
     private final CategoryService categoryService;
 
     public Page<OfferResponse> getAllOffers(Pageable pageable){
-        return offerRepository.findAll(pageable)
+        return offerRepository.findAllByStatusIn(List.of(OfferStatus.ACTIVE), pageable)
                 .map(offerMapper::toDto);
     }
 
     public Page<OfferResponse> getOffersByCompany(Long companyId, Pageable pageable){
         CompanyProfile company = companyService.getEntityById(companyId);
+        return offerRepository.findAllByCompanyAndStatusIn(company,List.of(OfferStatus.ACTIVE), pageable)
+                .map(offerMapper::toDto);
+    }
+
+    public Page<OfferResponse> getMyOffers(Pageable pageable){
+        User user = authService.getCurrentUser()
+                .orElseThrow(() -> new EntityNotFoundException("User not found"));
+        CompanyProfile company = companyService.getEntityByUser(user);
         return offerRepository.findAllByCompany(company, pageable)
                 .map(offerMapper::toDto);
     }

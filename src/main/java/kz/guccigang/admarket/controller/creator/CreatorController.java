@@ -22,9 +22,14 @@ public class CreatorController {
     private final CreatorService creatorService;
     private final UserService userService;
 
-    @GetMapping("{id}")
+    @GetMapping("/{id}")
     public ResponseEntity<CreatorResponse> getById(@PathVariable Long id){
         return ResponseEntity.ok(creatorService.getById(id));
+    }
+
+    @GetMapping("/user/{userId}")
+    public ResponseEntity<CreatorResponse> getByUserId(@PathVariable Long userId){
+        return ResponseEntity.ok(creatorService.getByUserId(userId));
     }
 
     @GetMapping
@@ -33,7 +38,7 @@ public class CreatorController {
     }
 
     @PreAuthorize("hasAuthority('ADMIN') or #userId == principal.id")
-    @PutMapping("{userId}")
+    @PutMapping("/{userId}")
     public ResponseEntity<CreatorResponse> updateCreatorProfile(@PathVariable Long userId, @RequestBody @Valid CreatorUpdateRequest request) {
         return ResponseEntity.ok(creatorService.updateCreatorProfile(userId, request));
     }

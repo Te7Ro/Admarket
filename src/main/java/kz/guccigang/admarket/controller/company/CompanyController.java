@@ -26,6 +26,11 @@ public class CompanyController {
         return ResponseEntity.ok(companyService.getById(id));
     }
 
+    @GetMapping("/user/{userId}")
+    public ResponseEntity<CompanyResponse> getByUserId(@PathVariable Long userId){
+        return ResponseEntity.ok(companyService.getCompanyByUserId(userId));
+    }
+
     @GetMapping
     public Page<CompanyResponse> getAll(@PageableDefault Pageable pageable){
         return companyService.getAll(pageable);

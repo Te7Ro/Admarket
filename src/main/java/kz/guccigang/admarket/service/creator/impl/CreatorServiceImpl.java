@@ -13,6 +13,9 @@ import kz.guccigang.admarket.repository.CategoryRepository;
 import kz.guccigang.admarket.repository.creator.CreatorRepository;
 import kz.guccigang.admarket.repository.UserRepository;
 import kz.guccigang.admarket.service.AuthenticationService;
+import kz.guccigang.admarket.service.creator.CreatorAudienceAgeService;
+import kz.guccigang.admarket.service.creator.CreatorAudienceGeoService;
+import kz.guccigang.admarket.service.creator.CreatorPlatformService;
 import kz.guccigang.admarket.service.creator.CreatorService;
 import kz.guccigang.admarket.util.mapper.CreatorProfileMapper;
 import lombok.RequiredArgsConstructor;
@@ -28,16 +31,34 @@ public class CreatorServiceImpl implements CreatorService {
     private final UserRepository userRepository;
     private final CategoryRepository categoryRepository;
     private final AuthenticationService authenticationService;
+    private final CreatorPlatformService platformService;
+    private final CreatorAudienceAgeService audienceAgeService;
+    private final CreatorAudienceGeoService audienceGeoService;
 
     public CreatorResponse getById(Long id) {
         CreatorProfile profile = creatorRepository.findById(id)
                 .orElseThrow(() -> new EntityNotFoundException("Creator not found"));
-        return mapper.toDto(profile);
+        CreatorResponse response = mapper.toDto(profile);
+        response.setPlatforms(platformService.getAllCreatorPlatforms(profile.getId()));
+        response.setAudienceAges(audienceAgeService.getAudienceAgeByCreatorId(profile.getId()));
+        response.setAudienceGeos(audienceGeoService.getAudienceGeoByCreatorId(profile.getId()));
+        return response;
     }
 
     public Page<CreatorResponse> getAll(Pageable pageable) {
         return creatorRepository.findAll(pageable)
                 .map(mapper::toDto);
+    }
+
+    public CreatorResponse getByUserId(Long userId){
+        User user = userRepository.findById(userId)
+                .orElseThrow(() -> new EntityNotFoundException("User Not Found"));
+        CreatorProfile profile = creatorRepository.findByUser(user);
+        CreatorResponse response = mapper.toDto(profile);
+        response.setPlatforms(platformService.getAllCreatorPlatforms(profile.getId()));
+        response.setAudienceAges(audienceAgeService.getAudienceAgeByCreatorId(profile.getId()));
+        response.setAudienceGeos(audienceGeoService.getAudienceGeoByCreatorId(profile.getId()));
+        return response;
     }
 
     public CreatorProfile getEntityById(Long id){

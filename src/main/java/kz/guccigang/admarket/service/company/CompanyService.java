@@ -11,6 +11,7 @@ import org.springframework.data.domain.Pageable;
 public interface CompanyService {
     Page<CompanyResponse> getAll(Pageable pageable);
     CompanyResponse getById(Long id);
+    CompanyResponse getCompanyByUserId(Long userId);
     CompanyResponse createCompanyProfile(CompanyCreateRequest request);
     CompanyResponse updateCompanyProfile(Long id, CompanyUpdateRequest request);
     CompanyProfile getEntityByUser(User user);

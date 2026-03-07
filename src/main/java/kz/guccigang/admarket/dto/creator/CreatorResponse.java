@@ -1,9 +1,13 @@
 package kz.guccigang.admarket.dto.creator;
 
+import kz.guccigang.admarket.dto.creator.age.CreatorAudienceAgeResponse;
+import kz.guccigang.admarket.dto.creator.geo.CreatorAudienceGeoResponse;
+import kz.guccigang.admarket.dto.creator.platform.CreatorPlatformResponse;
 import lombok.Data;
 
 import java.math.BigDecimal;
 import java.time.ZonedDateTime;
+import java.util.List;
 
 @Data
 public class CreatorResponse {
@@ -18,4 +22,7 @@ public class CreatorResponse {
     private Integer avgViews;
     private BigDecimal engagementRate;
     private String contactEmail;
+    private List<CreatorPlatformResponse> platforms;
+    private List<CreatorAudienceAgeResponse> audienceAges;
+    private List<CreatorAudienceGeoResponse> audienceGeos;
 }

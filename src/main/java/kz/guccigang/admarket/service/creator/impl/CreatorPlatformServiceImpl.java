@@ -8,6 +8,7 @@ import kz.guccigang.admarket.entity.creator.CreatorPlatform;
 import kz.guccigang.admarket.entity.creator.CreatorProfile;
 import kz.guccigang.admarket.exception.entity.EntityNotFoundException;
 import kz.guccigang.admarket.repository.creator.CreatorPlatformRepository;
+import kz.guccigang.admarket.repository.creator.CreatorRepository;
 import kz.guccigang.admarket.service.AuthenticationService;
 import kz.guccigang.admarket.service.creator.CreatorPlatformService;
 import kz.guccigang.admarket.service.creator.CreatorService;
@@ -23,12 +24,13 @@ import java.util.stream.Collectors;
 @RequiredArgsConstructor
 public class CreatorPlatformServiceImpl implements CreatorPlatformService {
     private final CreatorPlatformRepository repository;
-    private final CreatorService creatorService;
+    private final CreatorRepository creatorRepository;
     private final AuthenticationService authService;
     private final CreatorPlatformMapper mapper;
 
     public List<CreatorPlatformResponse> getAllCreatorPlatforms(Long creatorId){
-        CreatorProfile creator = creatorService.getEntityById(creatorId);
+        CreatorProfile creator = creatorRepository.findById(creatorId)
+                .orElseThrow(() -> new EntityNotFoundException("creator not found"));
         return repository.findAllByCreator(creator)
                 .stream().map(mapper::toDto).collect(Collectors.toList());
     }
@@ -37,7 +39,7 @@ public class CreatorPlatformServiceImpl implements CreatorPlatformService {
     public CreatorPlatformResponse createCreatorPlatform(CreatorPlatformCreateRequest request){
         User user = authService.getCurrentUser()
                 .orElseThrow(() -> new EntityNotFoundException("Profile not found"));
-        CreatorProfile creator = creatorService.getEntityByUser(user);
+        CreatorProfile creator = creatorRepository.findByUser(user);
 
         CreatorPlatform platform = mapper.toEntity(request);
         platform.setCreator(creator);
@@ -50,7 +52,7 @@ public class CreatorPlatformServiceImpl implements CreatorPlatformService {
     public CreatorPlatformResponse updateCreatorPlatform(Long id, CreatorPlatformUpdateRequest request){
         User user = authService.getCurrentUser()
                 .orElseThrow(() -> new EntityNotFoundException("Profile not found"));
-        CreatorProfile creator = creatorService.getEntityByUser(user);
+        CreatorProfile creator = creatorRepository.findByUser(user);
         CreatorPlatform platform = repository.findByIdAndCreator(id, creator)
                 .orElseThrow(() -> new EntityNotFoundException("Platform not found"));
         mapper.updateEntity(platform, request);
@@ -64,7 +66,7 @@ public class CreatorPlatformServiceImpl implements CreatorPlatformService {
     public void deleteCreatorPlatform(Long id){
         User user = authService.getCurrentUser()
                 .orElseThrow(() -> new EntityNotFoundException("Profile not found"));
-        CreatorProfile creator = creatorService.getEntityByUser(user);
+        CreatorProfile creator = creatorRepository.findByUser(user);
         CreatorPlatform platform = repository.findByIdAndCreator(id, creator)
                 .orElseThrow(() -> new EntityNotFoundException("Platform not found"));
         repository.delete(platform);

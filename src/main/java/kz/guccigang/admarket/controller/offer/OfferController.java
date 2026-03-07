@@ -30,6 +30,12 @@ public class OfferController {
         return offerService.getOffersByCompany(companyId, pageable);
     }
 
+    @PreAuthorize("isAuthenticated()")
+    @GetMapping("/my")
+    public Page<OfferResponse> getMyOffers(@PageableDefault Pageable pageable) {
+        return offerService.getMyOffers(pageable);
+    }
+
     @GetMapping("{id}")
     public ResponseEntity<OfferResponse> getOfferById(@PathVariable Long id) {
         return ResponseEntity.ok(offerService.getOfferById(id));

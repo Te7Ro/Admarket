@@ -38,6 +38,12 @@ public class CompanyServiceImpl implements CompanyService {
         return mapper.toDto(entity);
     }
 
+    public CompanyResponse getCompanyByUserId(Long userId){
+        User user = userRepository.findById(userId)
+                .orElseThrow(() -> new EntityNotFoundException("User Not Found"));
+        return mapper.toDto(companyRepository.findByUser(user));
+    }
+
     public Page<CompanyResponse> getAll(Pageable pageable) {
         return companyRepository.findAll(pageable)
                 .map(mapper::toDto);

@@ -1,10 +1,12 @@
 package kz.guccigang.admarket.dto.company;
 
+import kz.guccigang.admarket.dto.category.CategoryResponse;
 import kz.guccigang.admarket.entity.Country;
 import lombok.Data;
 
 import java.math.BigDecimal;
 import java.time.ZonedDateTime;
+import java.util.List;
 
 @Data
 public class CompanyResponse {
@@ -19,4 +21,5 @@ public class CompanyResponse {
     private Country country;
     private BigDecimal minBudget;
     private BigDecimal maxBudget;
+    private List<CategoryResponse> preferredCategories;
 }

@@ -11,6 +11,7 @@ import org.springframework.data.domain.Pageable;
 public interface CreatorService {
     Page<CreatorResponse> getAll(Pageable pageable);
     CreatorResponse getById(Long id);
+    CreatorResponse getByUserId(Long userId);
     CreatorResponse createCreatorProfile(CreatorCreateRequest request);
     CreatorResponse updateCreatorProfile(Long id, CreatorUpdateRequest request);
     CreatorProfile getEntityByUser(User user);
