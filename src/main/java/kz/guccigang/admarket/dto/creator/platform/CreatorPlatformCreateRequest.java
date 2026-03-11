@@ -8,7 +8,7 @@ import lombok.Data;
 
 @Data
 public class CreatorPlatformCreateRequest {
-    @NotBlank
+    @NotNull
     private Platform platform;
 
     @NotBlank
